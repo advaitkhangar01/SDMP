@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import { Card, Badge, Button, cn } from "@/components/ui";
 import { useAppStore } from "@/lib/store";
 import { useToast } from "@/components/ui/Toast";
-import { Search, Filter, AlertCircle, Clock, CheckCircle2, MessageSquare, ArrowRight, Star, Trash2 } from "lucide-react";
+import { Search, Filter, AlertCircle, Clock, CheckCircle2, MessageSquare, ArrowRight, Star, Trash2, Phone, Mail } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function InquiriesPage() {
