@@ -86,7 +86,7 @@ export default function SettingsPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <Input label="Meta Pixel ID" defaultValue="884210549210" />
                     <Input label="Business Manager ID" defaultValue="BM-2294103" />
-                    <Input label="Dataset (CAPI) ID" defaultValue="DS_SAVERA_RETREAT" />
+                    <Input label="Dataset (CAPI) ID" defaultValue="DS_SUNRISE_FARMS" />
                     <div className="space-y-1.5">
                       <label className="text-xs font-bold text-bark/60 uppercase tracking-widest px-1">Attribution Window</label>
                       <select className="w-full px-4 py-2.5 bg-white border border-bark/10 rounded-xl text-sm focus:ring-1 focus:ring-gold/20 outline-none">

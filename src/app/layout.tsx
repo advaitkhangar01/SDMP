@@ -14,7 +14,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Savera Retreat Admin Dashboard",
+  title: "Sunrise Farms Admin Dashboard",
   description: "Premium Hospitality Operations Platform",
 };
 

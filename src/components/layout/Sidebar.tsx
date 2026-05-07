@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { 
   LayoutDashboard, 
@@ -59,15 +60,28 @@ export function Sidebar() {
             animate={{ opacity: 1 }}
             className="flex items-center gap-3"
           >
-            <div className="w-8 h-8 bg-gold rounded-lg flex items-center justify-center">
-              <Sparkles className="text-cream w-5 h-5" />
+            <div className="relative w-10 h-10 overflow-hidden rounded-lg bg-cream/5 border border-gold/20">
+              <Image 
+                src="/logo.png" 
+                alt="Sunrise Farms Logo" 
+                fill
+                className="object-contain p-1"
+              />
             </div>
-            <span className="text-cream font-serif font-bold text-xl tracking-wide">SAVERA</span>
+            <div className="flex flex-col">
+              <span className="text-cream font-serif font-bold text-lg leading-tight tracking-tight">SUNRISE</span>
+              <span className="text-gold font-sans font-bold text-[10px] tracking-[0.2em] uppercase leading-none">Farms</span>
+            </div>
           </motion.div>
         )}
         {isCollapsed && (
-          <div className="w-8 h-8 bg-gold rounded-lg flex items-center justify-center mx-auto">
-            <Sparkles className="text-cream w-5 h-5" />
+          <div className="relative w-12 h-12 overflow-hidden mx-auto">
+            <Image 
+              src="/logo.png" 
+              alt="Logo" 
+              fill
+              className="object-contain"
+            />
           </div>
         )}
         <button 
