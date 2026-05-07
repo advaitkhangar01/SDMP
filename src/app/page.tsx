@@ -40,7 +40,7 @@ export default function Dashboard() {
   const avgRating = reviews.reduce((acc, curr) => acc + curr.rating, 0) / reviews.length;
 
   const kpis = [
-    { label: "Total Revenue", value: `₹${(totalRevenue / 100000).toFixed(2)}L`, change: "+12.5%", trendingUp: true, icon: DollarSign },
+    { label: "Total Revenue", value: `₹${(totalRevenue / 100000).toFixed(2)}L`, change: "+12.5%", trendingUp: true, icon: TrendingUp },
     { label: "Total Stays", value: activeBookings.toString(), change: "+4.2%", trendingUp: true, icon: CalendarIcon },
     { label: "Active Leads", value: pendingInquiries.toString(), change: "+18.4%", trendingUp: true, icon: Users },
     { label: "Pending Tasks", value: "24", change: "-2.1%", trendingUp: false, icon: MessageSquare },

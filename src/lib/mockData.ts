@@ -7,11 +7,11 @@ export const kpis = [
 ];
 
 export const bookings = [
-  { id: "BK-8801", guest: "Arjun Mehta", type: "Luxury Suite", checkIn: "2024-05-10", checkOut: "2024-05-15", guests: 2, amount: "₹85,000", paymentStatus: "Paid", status: "Confirmed", source: "Website" },
-  { id: "BK-8802", guest: "Priya Sharma", type: "Villa", checkIn: "2024-05-12", checkOut: "2024-05-18", guests: 4, amount: "₹2,10,000", paymentStatus: "Partial", status: "Pending", source: "Booking.com" },
-  { id: "BK-8803", guest: "Vikram Singh", type: "Garden Room", checkIn: "2024-05-15", checkOut: "2024-05-17", guests: 2, amount: "₹45,000", paymentStatus: "Paid", status: "Arrived", source: "Direct Call" },
-  { id: "BK-8804", guest: "Ananya Iyer", type: "Luxury Suite", checkIn: "2024-05-20", checkOut: "2024-05-25", guests: 2, amount: "₹92,000", paymentStatus: "Unpaid", status: "Cancelled", source: "Expedia" },
-  { id: "BK-8805", guest: "Rohan Gupta", type: "Villa", checkIn: "2024-05-22", checkOut: "2024-05-28", guests: 6, amount: "₹3,40,000", paymentStatus: "Paid", status: "Confirmed", source: "Website" },
+  { id: "BK-8801", guest: "Arjun Mehta", type: "Luxury Suite", checkIn: "2024-05-10", checkOut: "2024-05-15", guests: 2, amount: "₹60,000", paymentStatus: "Paid", status: "Confirmed", source: "Website" },
+  { id: "BK-8802", guest: "Priya Sharma", type: "Villa", checkIn: "2024-05-12", checkOut: "2024-05-18", guests: 30, amount: "₹1,50,000", paymentStatus: "Partial", status: "Pending", source: "Booking.com" },
+  { id: "BK-8803", guest: "Vikram Singh", type: "Garden Room", checkIn: "2024-05-15", checkOut: "2024-05-17", guests: 2, amount: "₹15,000", paymentStatus: "Paid", status: "Arrived", source: "Direct Call" },
+  { id: "BK-8804", guest: "Ananya Iyer", type: "Luxury Suite", checkIn: "2024-05-20", checkOut: "2024-05-25", guests: 2, amount: "₹60,000", paymentStatus: "Unpaid", status: "Cancelled", source: "Expedia" },
+  { id: "BK-8805", guest: "Rohan Gupta", type: "Villa", checkIn: "2024-05-22", checkOut: "2024-05-28", guests: 25, amount: "₹1,50,000", paymentStatus: "Paid", status: "Confirmed", source: "Website" },
 ];
 
 export const inquiries = [

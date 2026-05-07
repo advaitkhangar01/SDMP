@@ -92,7 +92,7 @@ export default function CRMPage() {
                         <div className="flex items-center justify-between pt-4 border-t border-bark/5">
                           <div className="flex items-center gap-3">
                             <div className="flex items-center gap-1 text-[10px] font-bold text-gold">
-                              <DollarSign size={10} /> {card.amount}
+                              <TrendingUp size={10} /> {card.amount}
                             </div>
                             <div className="flex items-center gap-1 text-[10px] font-bold text-bark/40">
                               <Clock size={10} /> {card.days}d

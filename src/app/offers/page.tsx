@@ -45,6 +45,31 @@ export default function OffersPage() {
         ))}
       </div>
 
+      <Card className="p-8 border-none shadow-premium bg-bark text-cream relative overflow-hidden">
+        <div className="absolute top-0 right-0 p-8 opacity-10">
+          <Ticket size={120} />
+        </div>
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="space-y-4">
+            <Badge variant="gold" className="px-3 py-1">Standard Pricing Rules</Badge>
+            <h3 className="text-3xl font-serif font-bold">Base Rates & Capacity</h3>
+            <p className="text-cream/60 max-w-md">Our standard pricing model for stays and events. Discounts are applied on top of these base rates.</p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2">
+              <p className="text-[10px] font-bold text-gold uppercase tracking-widest">Villa Stay</p>
+              <p className="text-2xl font-serif font-bold">₹25,000<span className="text-sm font-sans font-normal text-cream/40"> /night</span></p>
+              <p className="text-[10px] text-cream/40">Up to 30 Guests included</p>
+            </div>
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2">
+              <p className="text-[10px] font-bold text-gold uppercase tracking-widest">Events</p>
+              <p className="text-2xl font-serif font-bold">Variable</p>
+              <p className="text-[10px] text-cream/40">Based on guests, duration & catering</p>
+            </div>
+          </div>
+        </div>
+      </Card>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {offers.map((offer, i) => (
           <motion.div
