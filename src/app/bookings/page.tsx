@@ -321,7 +321,7 @@ export default function BookingsPage() {
                       <MapPin className="text-gold w-5 h-5 mt-0.5" />
                       <div>
                         <p className="text-xs text-bark/40">Unit Assigned</p>
-                        <p className="text-sm font-bold">{rooms.find(r => r.currentBookingId === selectedBooking.id)?.name || "Unassigned"}</p>
+                        <p className="text-sm font-bold">{villa.currentBookingId === selectedBooking.id ? villa.name : "Unassigned"}</p>
                       </div>
                     </div>
                   </div>
