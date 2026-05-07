@@ -117,17 +117,12 @@ export const useAppStore = create<AppState>()(
 
       checkInBooking: (bookingId) => set((state) => ({
         bookings: state.bookings.map(b => b.id === bookingId ? { ...b, status: "Arrived" as const } : b),
-        villa: { ...state.villa, status: "Occupied", currentBookingId: bookingId }
+        villa: { ...state.villa, status: "Occupied" as const, currentBookingId: bookingId }
       })),
 
       checkOutBooking: (bookingId) => set((state) => {
         const booking = state.bookings.find(b => b.id === bookingId);
         
-        const newState = {
-          bookings: state.bookings.map(b => b.id === bookingId ? { ...b, status: "Confirmed" as const } : b),
-          villa: { ...state.villa, status: "Dirty", currentBookingId: undefined },
-        };
-
         const cleaningTask = {
           id: state.tasks.length + 1,
           title: `Deep Clean Sunrise Villa (Post-Checkout: ${booking?.guest})`,
@@ -136,10 +131,12 @@ export const useAppStore = create<AppState>()(
           status: "Todo" as const,
           due: "Today"
         };
-        // @ts-ignore
-        newState.tasks = [...state.tasks, cleaningTask];
 
-        return newState;
+        return {
+          bookings: state.bookings.map(b => b.id === bookingId ? { ...b, status: "Confirmed" as const } : b),
+          villa: { ...state.villa, status: "Dirty" as const, currentBookingId: undefined },
+          tasks: [...state.tasks, cleaningTask]
+        };
       }),
 
       updateInquiry: (id, updates) => set((state) => ({
