@@ -116,7 +116,7 @@ export const events = [
 export const villaStatus = {
   name: "Sunrise Villa",
   status: "Occupied" as "Available" | "Occupied" | "Dirty" | "Maintenance",
-  currentBookingId: "BK-8802",
+  currentBookingId: "BK-8802" as string | undefined,
   lastCleaned: "2024-05-06",
   nextMaintenance: "2024-06-01"
 };
