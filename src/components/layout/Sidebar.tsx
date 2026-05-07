@@ -20,7 +20,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Sparkles,
-  BedDouble
+  BedDouble,
+  Building2
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/components/ui";
@@ -29,6 +30,7 @@ import { motion } from "framer-motion";
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/" },
   { icon: BedDouble, label: "Bookings", href: "/bookings" },
+  { icon: Building2, label: "Inventory", href: "/inventory" },
   { icon: Calendar, label: "Calendar", href: "/calendar" },
   { icon: CreditCard, label: "Payments", href: "/payments" },
   { icon: Users, label: "Guests", href: "/guests" },

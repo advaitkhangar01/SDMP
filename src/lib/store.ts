@@ -10,7 +10,8 @@ import {
   reviews as initialReviews,
   offers as initialOffers,
   payments as initialPayments,
-  events as initialEvents
+  events as initialEvents,
+  rooms as initialRooms
 } from "./mockData";
 
 export interface Review {
@@ -32,6 +33,7 @@ interface AppState {
   offers: typeof initialOffers;
   payments: typeof initialPayments;
   events: typeof initialEvents;
+  rooms: typeof initialRooms;
 
   // Bookings Actions
   addBooking: (booking: any) => void;
@@ -65,6 +67,9 @@ interface AppState {
 
   // Events Actions
   deleteEvent: (id: number) => void;
+
+  // Rooms Actions
+  updateRoomStatus: (id: string, status: string, bookingId?: string) => void;
 }
 
 export const useAppStore = create<AppState>()(
@@ -80,6 +85,7 @@ export const useAppStore = create<AppState>()(
       offers: initialOffers,
       payments: initialPayments,
       events: initialEvents,
+      rooms: initialRooms,
 
       addBooking: (booking) => set((state) => ({ 
         bookings: [booking, ...state.bookings] 
@@ -170,6 +176,10 @@ export const useAppStore = create<AppState>()(
 
       deleteEvent: (id) => set((state) => ({
         events: state.events.filter(e => e.id !== id)
+      })),
+
+      updateRoomStatus: (id, status, bookingId) => set((state) => ({
+        rooms: state.rooms.map(r => r.id === id ? { ...r, status, currentBookingId: bookingId } : r)
       })),
     }),
     {

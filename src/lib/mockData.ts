@@ -76,3 +76,15 @@ export const events = [
   { id: 2, title: "Tech Leaders Summit", date: "May 22, 2024", guests: 45, revenue: "₹4,20,000", status: "Planning", type: "Corporate" },
   { id: 3, title: "Yoga & Wellness Retreat", date: "June 05, 2024", guests: 20, revenue: "₹1,80,000", status: "Open", type: "Wellness" },
 ];
+
+export const rooms = [
+  { id: "V1", name: "Villa 1", type: "Villa", status: "Occupied", currentBookingId: "BK-8802" },
+  { id: "V2", name: "Villa 2", type: "Villa", status: "Available" },
+  { id: "V3", name: "Villa 3", type: "Villa", status: "Maintenance" },
+  { id: "V4", name: "Villa 4", type: "Villa", status: "Dirty" },
+  { id: "S1", name: "Luxury Suite A", type: "Luxury Suite", status: "Occupied", currentBookingId: "BK-8801" },
+  { id: "S2", name: "Luxury Suite B", type: "Luxury Suite", status: "Available" },
+  { id: "G1", name: "Garden Room 101", type: "Garden Room", status: "Available" },
+  { id: "G2", name: "Garden Room 102", type: "Garden Room", status: "Available" },
+  { id: "G3", name: "Garden Room 103", type: "Garden Room", status: "Occupied", currentBookingId: "BK-8803" },
+];
