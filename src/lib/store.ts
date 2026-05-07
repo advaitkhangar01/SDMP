@@ -36,6 +36,7 @@ interface AppState {
   events: typeof initialEvents;
   villa: typeof initialVilla;
   staff: typeof initialStaff;
+  expenses: { id: string; category: string; amount: number; date: string; notes: string }[];
 
   // Bookings Actions
   addBooking: (booking: any) => void;
@@ -65,6 +66,11 @@ interface AppState {
 
   // Payments Actions
   addPayment: (payment: any) => void;
+  deletePayment: (id: string) => void;
+
+  // Expenses Actions
+  addExpense: (expense: any) => void;
+  deleteExpense: (id: string) => void;
 
   // Marketing Actions
   toggleCampaign: (name: string) => void;
@@ -91,6 +97,11 @@ export const useAppStore = create<AppState>()(
       events: initialEvents,
       villa: initialVilla,
       staff: initialStaff,
+      expenses: [
+        { id: "EXP-001", category: "Electricity", amount: 12500, date: "2024-05-01", notes: "Monthly bill" },
+        { id: "EXP-002", category: "F&B", amount: 8400, date: "2024-05-02", notes: "Grocery for guests" },
+        { id: "EXP-003", category: "Maintenance", amount: 3200, date: "2024-05-03", notes: "AC Repair" },
+      ],
 
       addBooking: (booking) => set((state) => ({ 
         bookings: [booking, ...state.bookings] 
@@ -200,6 +211,18 @@ export const useAppStore = create<AppState>()(
 
       addPayment: (payment) => set((state) => ({
         payments: [payment, ...state.payments]
+      })),
+
+      deletePayment: (id) => set((state) => ({
+        payments: state.payments.filter(p => p.id !== id)
+      })),
+
+      addExpense: (expense) => set((state) => ({
+        expenses: [{ ...expense, id: `EXP-${Math.floor(Math.random() * 1000)}` }, ...state.expenses]
+      })),
+
+      deleteExpense: (id) => set((state) => ({
+        expenses: state.expenses.filter(e => e.id !== id)
       })),
 
       toggleCampaign: (name) => set((state) => ({
