@@ -15,7 +15,7 @@ export function Card({ children, className }: { children: React.ReactNode; class
   );
 }
 
-export function Badge({ children, variant = "default" }: { children: React.ReactNode; variant?: "default" | "success" | "warning" | "danger" | "info" | "gold" }) {
+export function Badge({ children, variant = "default", className }: { children: React.ReactNode; variant?: "default" | "success" | "warning" | "danger" | "info" | "gold" | "outline"; className?: string }) {
   const variants = {
     default: "bg-bark/10 text-bark",
     success: "bg-sage/10 text-sage",
@@ -23,10 +23,11 @@ export function Badge({ children, variant = "default" }: { children: React.React
     danger: "bg-rose/10 text-rose",
     info: "bg-sky/10 text-sky",
     gold: "bg-gold/10 text-gold",
+    outline: "border border-bark/20 text-bark bg-transparent",
   };
   
   return (
-    <span className={cn("px-2.5 py-0.5 rounded-full text-xs font-medium", variants[variant])}>
+    <span className={cn("px-2.5 py-0.5 rounded-full text-xs font-medium", variants[variant], className)}>
       {children}
     </span>
   );
