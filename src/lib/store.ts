@@ -13,6 +13,14 @@ import {
   events as initialEvents
 } from "./mockData";
 
+export interface Review {
+  guest: string;
+  rating: number;
+  comment: string;
+  date: string;
+  response?: string;
+}
+
 interface AppState {
   bookings: typeof initialBookings;
   guests: typeof initialGuests;
@@ -20,7 +28,7 @@ interface AppState {
   crmPipeline: typeof initialCRM;
   tasks: typeof initialTasks;
   campaigns: typeof initialCampaigns;
-  reviews: typeof initialReviews;
+  reviews: Review[];
   offers: typeof initialOffers;
   payments: typeof initialPayments;
   events: typeof initialEvents;
