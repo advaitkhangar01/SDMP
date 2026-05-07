@@ -5,7 +5,6 @@ import { Card, Badge, Button, cn } from "@/components/ui";
 import { 
   TrendingUp, 
   TrendingDown, 
-  DollarSign, 
   Calendar as CalendarIcon, 
   Users, 
   MessageSquare, 

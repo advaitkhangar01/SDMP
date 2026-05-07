@@ -3,7 +3,7 @@
 import { useAppStore } from "@/lib/store";
 import { useToast } from "@/components/ui/Toast";
 import { Card, Badge, Button } from "@/components/ui";
-import { Plus, MoreHorizontal, MessageSquare, Phone, MoreVertical, DollarSign, Clock, ArrowRight, ArrowLeft } from "lucide-react";
+import { Plus, MoreHorizontal, MessageSquare, Phone, MoreVertical, TrendingUp, Clock, ArrowRight, ArrowLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function CRMPage() {
