@@ -7,9 +7,9 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function Card({ children, className }: { children: React.ReactNode; className?: string }) {
+export function Card({ children, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { children: React.ReactNode }) {
   return (
-    <div className={cn("luxury-card p-6", className)}>
+    <div className={cn("luxury-card p-6", className)} {...props}>
       {children}
     </div>
   );
