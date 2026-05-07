@@ -126,10 +126,10 @@ export function Sidebar() {
         <div className="p-4 m-4 rounded-xl bg-gold/10 border border-gold/20">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-gold/20 flex items-center justify-center text-gold font-bold text-xs">
-              JD
+              YP
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold text-cream truncate">Jaideep Singh</p>
+              <p className="text-xs font-bold text-cream truncate">Yashika Pachisia</p>
               <p className="text-[10px] text-gold/80 truncate">General Manager</p>
             </div>
           </div>

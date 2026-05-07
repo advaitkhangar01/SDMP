@@ -12,7 +12,7 @@ export default function TasksPage() {
   const { toast } = useToast();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeCol, setActiveCol] = useState("Todo");
-  const [newTask, setNewTask] = useState({ title: "", assignee: "Admin", priority: "Medium" });
+  const [newTask, setNewTask] = useState({ title: "", assignee: "Yashika", priority: "Medium" });
   
   const columns = ["Todo", "In Progress", "Done"];
 

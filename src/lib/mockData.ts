@@ -47,7 +47,7 @@ export const tasks = [
   { id: 1, title: "Deep clean Villa 4", priority: "High", assignee: "Suresh K.", status: "Todo", due: "Today" },
   { id: 2, title: "Check pool pH levels", priority: "Medium", assignee: "Ramesh P.", status: "In Progress", due: "Tomorrow" },
   { id: 3, title: "Inventory check for kitchen", priority: "Low", assignee: "Meena R.", status: "Done", due: "Yesterday" },
-  { id: 4, title: "Meta pixel sync error check", priority: "High", assignee: "Admin", status: "Todo", due: "Today" },
+  { id: 4, title: "Meta pixel sync error check", priority: "High", assignee: "Yashika", status: "Todo", due: "Today" },
 ];
 
 export const reviews = [

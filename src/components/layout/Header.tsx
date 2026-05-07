@@ -45,8 +45,8 @@ export function Header({ title }: { title: string }) {
             {showProfile && (
               <div className="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-premium border border-bark/5 p-2 animate-in fade-in zoom-in duration-200">
                 <div className="p-3 border-b border-bark/5 mb-1">
-                  <p className="text-sm font-bold">Jaideep Singh</p>
-                  <p className="text-xs text-bark/40">gm@sunrisefarmsnagpur.com</p>
+                  <p className="text-sm font-bold">Yashika Pachisia</p>
+                  <p className="text-xs text-bark/40">yashika@sunrisefarmsnagpur.com</p>
                 </div>
                 <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-bark/70 hover:bg-bark/5 rounded-lg transition-colors">
                   <User size={16} />
