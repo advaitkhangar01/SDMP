@@ -33,7 +33,47 @@ export default function SettingsPage() {
     { id: "notifications", label: "Alerts", icon: Bell },
     { id: "integrations", label: "Integrations", icon: Globe },
     { id: "marketing", label: "Meta Marketing", icon: Target },
+    { id: "data", label: "Data Safety", icon: ShieldCheck },
   ];
+
+  const handleExportData = () => {
+    const data = localStorage.getItem("savera-retreat-storage");
+    if (!data) return toast("No data found to export", "error");
+    
+    const blob = new Blob([data], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `sunrise_farms_backup_${new Date().toISOString().split('T')[0]}.json`;
+    link.click();
+    toast("Backup downloaded successfully", "success");
+  };
+
+  const handleImportData = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const json = JSON.parse(event.target?.result as string);
+        if (!json.state) throw new Error("Invalid backup format");
+        localStorage.setItem("savera-retreat-storage", JSON.stringify(json));
+        toast("Data imported! Reloading...", "success");
+        setTimeout(() => window.location.reload(), 1500);
+      } catch (err) {
+        toast("Error importing data: " + (err as Error).message, "error");
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  const handleReset = () => {
+    if (confirm("CRITICAL: This will wipe all bookings, guests, and expenses. Are you absolutely sure?")) {
+      localStorage.removeItem("savera-retreat-storage");
+      window.location.reload();
+    }
+  };
 
   const handleSave = () => {
     setIsSaving(true);
@@ -118,6 +158,64 @@ export default function SettingsPage() {
                   <Button onClick={handleSave} disabled={isSaving} className="bg-gold px-8 shadow-gold">
                     {isSaving ? "Saving..." : "Save Changes"}
                   </Button>
+                </div>
+              </motion.div>
+            ) : activeSection === "data" ? (
+              <motion.div
+                key="data"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                className="space-y-12"
+              >
+                <div className="space-y-2">
+                  <h3 className="text-2xl font-serif font-bold text-bark">Data Safety & Backups</h3>
+                  <p className="text-sm text-bark/40">Protect your business records and management state.</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <section className="p-6 bg-white rounded-3xl border border-bark/5 space-y-4">
+                    <div className="w-12 h-12 bg-sage/10 text-sage rounded-2xl flex items-center justify-center">
+                      <Save size={24} />
+                    </div>
+                    <div>
+                      <h4 className="font-bold">Manual Backup</h4>
+                      <p className="text-xs text-bark/40">Download a JSON file containing all your local data.</p>
+                    </div>
+                    <Button onClick={handleExportData} variant="outline" className="w-full">Download Backup</Button>
+                  </section>
+
+                  <section className="p-6 bg-white rounded-3xl border border-bark/5 space-y-4">
+                    <div className="w-12 h-12 bg-sky/10 text-sky rounded-2xl flex items-center justify-center">
+                      <RefreshCw size={24} />
+                    </div>
+                    <div>
+                      <h4 className="font-bold">Restore System</h4>
+                      <p className="text-xs text-bark/40">Upload a previous backup file to restore your state.</p>
+                    </div>
+                    <div className="relative">
+                      <input 
+                        type="file" 
+                        accept=".json" 
+                        onChange={handleImportData} 
+                        className="absolute inset-0 opacity-0 cursor-pointer" 
+                      />
+                      <Button variant="outline" className="w-full">Upload & Restore</Button>
+                    </div>
+                  </section>
+                </div>
+
+                <div className="p-8 bg-rose/5 rounded-3xl border border-rose/10 space-y-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-rose/10 text-rose rounded-2xl flex items-center justify-center shrink-0">
+                      <Target size={24} />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-rose">Factory Reset</h4>
+                      <p className="text-xs text-rose/60">Permanently delete all local data and return to default state. This action cannot be undone.</p>
+                    </div>
+                  </div>
+                  <Button onClick={handleReset} className="bg-rose text-white hover:bg-rose/90 border-none px-8">Wipe All Data</Button>
                 </div>
               </motion.div>
             ) : (
