@@ -88,3 +88,11 @@ export const rooms = [
   { id: "G2", name: "Garden Room 102", type: "Garden Room", status: "Available" },
   { id: "G3", name: "Garden Room 103", type: "Garden Room", status: "Occupied", currentBookingId: "BK-8803" },
 ];
+
+export const staff = [
+  { id: "S1", name: "Suresh Kumar", role: "Housekeeping", status: "On Duty" },
+  { id: "S2", name: "Ramesh Pawar", role: "Maintenance", status: "On Duty" },
+  { id: "S3", name: "Meena Rao", role: "Housekeeping", status: "On Duty" },
+  { id: "S4", name: "Prakash Singh", role: "Security", status: "On Duty" },
+  { id: "S5", name: "Yashika Pachisia", role: "General Manager", status: "Active" },
+];

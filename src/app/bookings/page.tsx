@@ -21,7 +21,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function BookingsPage() {
-  const { bookings: allBookings, addBooking, updateBooking, deleteBooking } = useAppStore();
+  const { bookings: allBookings, addBooking, updateBooking, deleteBooking, rooms, checkInBooking, checkOutBooking } = useAppStore();
   const { toast } = useToast();
   
   const [selectedBookingId, setSelectedBookingId] = useState<string | null>(null);
@@ -309,17 +309,70 @@ export default function BookingsPage() {
 
                 <section className="space-y-4">
                   <h4 className="text-xs font-bold text-bark/40 uppercase tracking-widest">Stay Information</h4>
-                  <div className="flex items-start gap-3 p-4 bg-white rounded-2xl border border-bark/5">
-                    <Calendar className="text-gold w-5 h-5 mt-0.5" />
-                    <div>
-                      <p className="text-xs text-bark/40">Dates</p>
-                      <p className="text-sm font-bold">{selectedBooking.checkIn} — {selectedBooking.checkOut}</p>
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3 p-4 bg-white rounded-2xl border border-bark/5">
+                      <Calendar className="text-gold w-5 h-5 mt-0.5" />
+                      <div>
+                        <p className="text-xs text-bark/40">Dates</p>
+                        <p className="text-sm font-bold">{selectedBooking.checkIn} — {selectedBooking.checkOut}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-4 bg-white rounded-2xl border border-bark/5">
+                      <MapPin className="text-gold w-5 h-5 mt-0.5" />
+                      <div>
+                        <p className="text-xs text-bark/40">Unit Assigned</p>
+                        <p className="text-sm font-bold">{rooms.find(r => r.currentBookingId === selectedBooking.id)?.name || "Unassigned"}</p>
+                      </div>
                     </div>
                   </div>
                 </section>
 
                 <section className="space-y-4">
-                  <h4 className="text-xs font-bold text-bark/40 uppercase tracking-widest">Update Status</h4>
+                  <h4 className="text-xs font-bold text-bark/40 uppercase tracking-widest">Operations</h4>
+                  <div className="grid grid-cols-1 gap-3">
+                    {selectedBooking.status !== "Arrived" ? (
+                      <div className="space-y-3">
+                        <label className="text-[10px] font-bold text-bark/40 uppercase tracking-widest px-1">Assign Room for Check-in</label>
+                        <div className="flex gap-2">
+                          <select 
+                            id="roomSelect"
+                            className="flex-1 px-4 py-2 bg-white border border-bark/10 rounded-xl text-sm focus:ring-1 focus:ring-gold/20 outline-none"
+                          >
+                            <option value="">Select available unit...</option>
+                            {rooms.filter(r => r.status === "Available" && r.type === selectedBooking.type).map(r => (
+                              <option key={r.id} value={r.id}>{r.name}</option>
+                            ))}
+                          </select>
+                          <Button 
+                            onClick={() => {
+                              const roomId = (document.getElementById("roomSelect") as HTMLSelectElement).value;
+                              if (!roomId) return toast("Please select a room", "error");
+                              checkInBooking(selectedBooking.id, roomId);
+                              toast("Guest checked in successfully!", "success");
+                            }}
+                            className="bg-sage text-white px-6"
+                          >
+                            Check-in
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <Button 
+                        onClick={() => {
+                          checkOutBooking(selectedBooking.id);
+                          toast("Check-out complete. Housekeeping notified.", "success");
+                          setSelectedBookingId(null);
+                        }}
+                        className="w-full bg-rose text-white h-12 text-sm shadow-lg shadow-rose/20"
+                      >
+                        Complete Check-out
+                      </Button>
+                    )}
+                  </div>
+                </section>
+
+                <section className="space-y-4">
+                  <h4 className="text-xs font-bold text-bark/40 uppercase tracking-widest">Quick Status Update</h4>
                   <div className="flex flex-wrap gap-2">
                     {tabs.filter(t => t !== "All").map(status => (
                       <button

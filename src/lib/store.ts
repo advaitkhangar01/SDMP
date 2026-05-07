@@ -11,7 +11,8 @@ import {
   offers as initialOffers,
   payments as initialPayments,
   events as initialEvents,
-  rooms as initialRooms
+  rooms as initialRooms,
+  staff as initialStaff
 } from "./mockData";
 
 export interface Review {
@@ -34,11 +35,17 @@ interface AppState {
   payments: typeof initialPayments;
   events: typeof initialEvents;
   rooms: typeof initialRooms;
+  staff: typeof initialStaff;
+  payments: typeof initialPayments;
+  events: typeof initialEvents;
+  rooms: typeof initialRooms;
 
   // Bookings Actions
   addBooking: (booking: any) => void;
   updateBooking: (id: string, updates: any) => void;
   deleteBooking: (id: string) => void;
+  checkInBooking: (bookingId: string, roomId: string) => void;
+  checkOutBooking: (bookingId: string) => void;
 
   // Inquiries Actions
   updateInquiry: (id: string, updates: any) => void;
@@ -86,6 +93,7 @@ export const useAppStore = create<AppState>()(
       payments: initialPayments,
       events: initialEvents,
       rooms: initialRooms,
+      staff: initialStaff,
 
       addBooking: (booking) => set((state) => ({ 
         bookings: [booking, ...state.bookings] 
@@ -98,6 +106,36 @@ export const useAppStore = create<AppState>()(
       deleteBooking: (id) => set((state) => ({
         bookings: state.bookings.filter(b => b.id !== id)
       })),
+
+      checkInBooking: (bookingId, roomId) => set((state) => ({
+        bookings: state.bookings.map(b => b.id === bookingId ? { ...b, status: "Arrived" as const } : b),
+        rooms: state.rooms.map(r => r.id === roomId ? { ...r, status: "Occupied", currentBookingId: bookingId } : r)
+      })),
+
+      checkOutBooking: (bookingId) => set((state) => {
+        const booking = state.bookings.find(b => b.id === bookingId);
+        const room = state.rooms.find(r => r.currentBookingId === bookingId);
+        
+        const newState = {
+          bookings: state.bookings.map(b => b.id === bookingId ? { ...b, status: "Confirmed" as const } : b), // Should be "Checked-out" but mock status set is limited
+          rooms: state.rooms.map(r => r.currentBookingId === bookingId ? { ...r, status: "Dirty", currentBookingId: undefined } : r),
+        };
+
+        if (room) {
+          const cleaningTask = {
+            id: state.tasks.length + 1,
+            title: `Deep Clean ${room.name} (Post-Checkout: ${booking?.guest})`,
+            priority: "High" as const,
+            assignee: "Housekeeping Team",
+            status: "Todo" as const,
+            due: "Today"
+          };
+          // @ts-ignore
+          newState.tasks = [...state.tasks, cleaningTask];
+        }
+
+        return newState;
+      }),
 
       updateInquiry: (id, updates) => set((state) => ({
         inquiries: state.inquiries.map(i => i.id === id ? { ...i, ...updates } : i)
