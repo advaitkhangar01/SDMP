@@ -6,164 +6,176 @@ import { Card, Badge, Button, cn } from "@/components/ui";
 import { 
   Building2, 
   CheckCircle2, 
-  AlertCircle, 
-  Clock, 
   User, 
   Hammer,
   Droplets,
-  Search,
-  Filter
+  Calendar,
+  Clock,
+  Sparkles,
+  ShieldCheck
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { useState } from "react";
 
-export default function InventoryPage() {
-  const { rooms, updateRoomStatus, bookings } = useAppStore();
+export default function VillaStatusPage() {
+  const { villa, updateVillaStatus, bookings } = useAppStore();
   const { toast } = useToast();
-  const [filter, setFilter] = useState("All");
 
-  const filteredRooms = filter === "All" 
-    ? rooms 
-    : rooms.filter(r => r.status === filter || r.type === filter);
+  const booking = bookings.find(b => b.id === villa.currentBookingId);
 
-  const getStatusColor = (status: string) => {
+  const getStatusDetails = (status: string) => {
     switch (status) {
-      case "Available": return "success";
-      case "Occupied": return "danger";
-      case "Dirty": return "warning";
-      case "Maintenance": return "warning";
-      case "Blocked": return "default";
-      default: return "default";
+      case "Available": return { color: "success", icon: <CheckCircle2 size={24} />, desc: "Ready for Guest" };
+      case "Occupied": return { color: "danger", icon: <User size={24} />, desc: "Guest Staying" };
+      case "Dirty": return { color: "warning", icon: <Droplets size={24} />, desc: "Cleaning Required" };
+      case "Maintenance": return { color: "warning", icon: <Hammer size={24} />, desc: "Under Repair" };
+      default: return { color: "default", icon: <Clock size={24} />, desc: "Unknown" };
     }
   };
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "Available": return <CheckCircle2 size={16} />;
-      case "Occupied": return <User size={16} />;
-      case "Dirty": return <Droplets size={16} />;
-      case "Maintenance": return <Hammer size={16} />;
-      default: return <Clock size={16} />;
-    }
-  };
+  const details = getStatusDetails(villa.status);
 
-  const handleStatusChange = (roomId: string, newStatus: string) => {
-    updateRoomStatus(roomId, newStatus);
-    toast(`${roomId} is now ${newStatus}`, "success");
+  const handleStatusChange = (newStatus: any) => {
+    updateVillaStatus(newStatus);
+    toast(`Villa is now ${newStatus}`, "success");
   };
 
   return (
-    <div className="space-y-8 pb-12">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h2 className="text-2xl font-serif font-bold text-bark">Villa & Room Inventory</h2>
-          <p className="text-sm text-bark/40">Real-time status of all physical assets</p>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-bark/30" size={16} />
-            <input 
-              type="text" 
-              placeholder="Search units..." 
-              className="pl-10 pr-4 py-2 bg-white border border-bark/10 rounded-xl text-sm focus:ring-1 focus:ring-gold/20 outline-none w-64"
-            />
+    <div className="max-w-4xl mx-auto space-y-8 pb-12">
+      <div className="text-center space-y-2">
+        <h2 className="text-3xl font-serif font-bold text-bark">Villa Command Center</h2>
+        <p className="text-sm text-bark/40">Real-time management of Sunrise Villa</p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Status Card */}
+        <Card className="md:col-span-2 p-8 border-none shadow-premium bg-white relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-8 opacity-5">
+            <Building2 size={120} />
           </div>
-          <Button className="bg-bark text-cream">Add Unit</Button>
-        </div>
-      </div>
-
-      <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
-        {["All", "Available", "Occupied", "Dirty", "Maintenance", "Villa", "Garden Room"].map((f) => (
-          <button
-            key={f}
-            onClick={() => setFilter(f)}
-            className={cn(
-              "px-4 py-2 rounded-full text-xs font-bold transition-all border",
-              filter === f ? "bg-gold text-white border-gold shadow-gold" : "bg-white text-bark/40 border-bark/10 hover:border-gold/30"
-            )}
-          >
-            {f}
-          </button>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {filteredRooms.map((room, i) => {
-          const booking = bookings.find(b => b.id === room.currentBookingId);
           
-          return (
-            <motion.div
-              key={room.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.05 }}
-            >
-              <Card className="group hover:shadow-xl transition-all duration-300 border-none shadow-premium overflow-hidden p-0">
-                <div className={cn(
-                  "h-1.5 w-full",
-                  room.status === "Available" ? "bg-sage" :
-                  room.status === "Occupied" ? "bg-rose" :
-                  room.status === "Dirty" ? "bg-amber" : "bg-bark/20"
-                )} />
-                
-                <div className="p-6 space-y-6">
-                  <div className="flex justify-between items-start">
-                    <div className="space-y-1">
-                      <h3 className="font-serif font-bold text-lg">{room.name}</h3>
-                      <p className="text-[10px] font-bold text-bark/30 uppercase tracking-widest">{room.type}</p>
+          <div className="relative z-10 space-y-8">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className={cn("w-16 h-16 rounded-2xl flex items-center justify-center", 
+                  villa.status === "Available" ? "bg-sage/10 text-sage" :
+                  villa.status === "Occupied" ? "bg-rose/10 text-rose" : "bg-amber/10 text-amber"
+                )}>
+                  {details.icon}
+                </div>
+                <div>
+                  <h3 className="text-2xl font-serif font-bold text-bark">{villa.name}</h3>
+                  <p className="text-sm font-bold text-bark/30 uppercase tracking-widest">{details.desc}</p>
+                </div>
+              </div>
+              <Badge variant={details.color as any} className="text-sm px-4 py-1 rounded-full uppercase tracking-widest">
+                {villa.status}
+              </Badge>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="p-4 bg-bark/[0.02] rounded-2xl border border-bark/5 space-y-1">
+                <p className="text-[10px] font-bold text-bark/30 uppercase tracking-widest">Last Cleaned</p>
+                <p className="text-sm font-bold">{villa.lastCleaned}</p>
+              </div>
+              <div className="p-4 bg-bark/[0.02] rounded-2xl border border-bark/5 space-y-1">
+                <p className="text-[10px] font-bold text-bark/30 uppercase tracking-widest">Next Maintenance</p>
+                <p className="text-sm font-bold text-amber">{villa.nextMaintenance}</p>
+              </div>
+            </div>
+
+            <div className="flex gap-3">
+              {villa.status === "Dirty" && (
+                <Button onClick={() => handleStatusChange("Available")} className="flex-1 bg-sage text-white h-12 shadow-lg shadow-sage/10">
+                  <Sparkles size={18} className="mr-2" /> Mark as Clean & Ready
+                </Button>
+              )}
+              {villa.status === "Available" && (
+                <Button onClick={() => handleStatusChange("Maintenance")} variant="outline" className="flex-1 h-12 border-amber/20 text-amber hover:bg-amber/5">
+                  <Hammer size={18} className="mr-2" /> Block for Maintenance
+                </Button>
+              )}
+              {villa.status === "Maintenance" && (
+                <Button onClick={() => handleStatusChange("Available")} className="flex-1 bg-sage text-white h-12">
+                  Complete Maintenance
+                </Button>
+              )}
+            </div>
+          </div>
+        </Card>
+
+        {/* Current Occupant Card */}
+        <Card className="p-8 border-none shadow-premium bg-bark text-cream relative overflow-hidden">
+          <div className="relative z-10 h-full flex flex-col justify-between">
+            <div className="space-y-6">
+              <h4 className="text-xs font-bold text-gold uppercase tracking-widest">Current Occupancy</h4>
+              {villa.status === "Occupied" && booking ? (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-xl font-bold">
+                      {booking.guest.charAt(0)}
                     </div>
-                    <Badge variant={getStatusColor(room.status)} className="flex items-center gap-1">
-                      {getStatusIcon(room.status)} {room.status}
-                    </Badge>
+                    <div>
+                      <p className="font-bold text-lg">{booking.guest}</p>
+                      <p className="text-xs text-cream/40">{booking.id}</p>
+                    </div>
                   </div>
-
-                  {room.status === "Occupied" && booking ? (
-                    <div className="p-3 bg-bark/[0.02] rounded-xl border border-bark/5 space-y-2">
-                      <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-full bg-gold/10 flex items-center justify-center text-[10px] font-bold text-gold">
-                          {booking.guest.charAt(0)}
-                        </div>
-                        <span className="text-xs font-bold text-bark">{booking.guest}</span>
-                      </div>
-                      <div className="flex justify-between text-[10px] text-bark/40 font-bold uppercase tracking-widest">
-                        <span>Check-out</span>
-                        <span>{booking.checkOut}</span>
-                      </div>
+                  <div className="space-y-3 pt-4 border-t border-white/5">
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] font-bold text-cream/40 uppercase tracking-widest">Stay Duration</span>
+                      <span className="text-xs font-bold">{booking.checkIn} — {booking.checkOut}</span>
                     </div>
-                  ) : (
-                    <div className="h-[68px] flex items-center justify-center border border-dashed border-bark/10 rounded-xl">
-                      <p className="text-[10px] font-bold text-bark/20 uppercase tracking-widest">No active stay</p>
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] font-bold text-cream/40 uppercase tracking-widest">Guests</span>
+                      <span className="text-xs font-bold">{booking.guests} People</span>
                     </div>
-                  )}
-
-                  <div className="grid grid-cols-2 gap-2 pt-2">
-                    {room.status === "Dirty" ? (
-                      <Button 
-                        onClick={() => handleStatusChange(room.id, "Available")}
-                        className="col-span-2 bg-sage text-white text-xs h-9"
-                      >
-                        Mark Clean
-                      </Button>
-                    ) : room.status === "Available" ? (
-                      <>
-                        <Button className="bg-bark text-cream text-xs h-9">Book Now</Button>
-                        <Button 
-                          variant="outline" 
-                          onClick={() => handleStatusChange(room.id, "Maintenance")}
-                          className="text-xs h-9"
-                        >
-                          Maintenance
-                        </Button>
-                      </>
-                    ) : (
-                      <Button variant="outline" className="col-span-2 text-xs h-9">Manage Unit</Button>
-                    )}
                   </div>
                 </div>
-              </Card>
-            </motion.div>
-          );
-        })}
+              ) : (
+                <div className="flex-1 flex flex-col items-center justify-center text-center space-y-4 py-8">
+                  <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center text-white/20">
+                    <Building2 size={32} />
+                  </div>
+                  <p className="text-sm text-cream/40 italic">No active stay currently.</p>
+                </div>
+              )}
+            </div>
+
+            <div className="pt-6 border-t border-white/10">
+              <div className="flex items-center gap-2 text-gold">
+                <ShieldCheck size={16} />
+                <span className="text-[10px] font-bold uppercase tracking-widest">System Secure</span>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </div>
+
+      {/* Operations Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card className="p-6 border-none shadow-premium flex items-center justify-between group cursor-pointer hover:bg-gold/5 transition-colors">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-gold/10 rounded-xl flex items-center justify-center text-gold">
+              <Calendar size={20} />
+            </div>
+            <div>
+              <p className="font-bold">Booking Calendar</p>
+              <p className="text-xs text-bark/40">View upcoming stays for the villa</p>
+            </div>
+          </div>
+          <Clock className="text-bark/10 group-hover:text-gold/20 transition-colors" size={24} />
+        </Card>
+        <Card className="p-6 border-none shadow-premium flex items-center justify-between group cursor-pointer hover:bg-sage/5 transition-colors">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-sage/10 rounded-xl flex items-center justify-center text-sage">
+              <Sparkles size={20} />
+            </div>
+            <div>
+              <p className="font-bold">Cleaning Schedule</p>
+              <p className="text-xs text-bark/40">Manage housekeeping frequency</p>
+            </div>
+          </div>
+          <Droplets className="text-bark/10 group-hover:text-sage/20 transition-colors" size={24} />
+        </Card>
       </div>
     </div>
   );

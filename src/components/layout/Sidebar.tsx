@@ -30,7 +30,7 @@ import { motion } from "framer-motion";
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/" },
   { icon: BedDouble, label: "Bookings", href: "/bookings" },
-  { icon: Building2, label: "Inventory", href: "/inventory" },
+  { icon: Building2, label: "Villa Status", href: "/inventory" },
   { icon: Calendar, label: "Calendar", href: "/calendar" },
   { icon: CreditCard, label: "Payments", href: "/payments" },
   { icon: Users, label: "Guests", href: "/guests" },

@@ -200,11 +200,11 @@ export default function GuestsPage() {
                   <div className="space-y-3">
                     <div className="flex items-center gap-3 p-3 bg-white rounded-xl border border-bark/5">
                       <Phone size={16} className="text-gold" />
-                      <span className="text-sm font-medium">+91 98765 43210</span>
+                      <span className="text-sm font-medium">{selectedGuest.phone}</span>
                     </div>
                     <div className="flex items-center gap-3 p-3 bg-white rounded-xl border border-bark/5">
                       <Mail size={16} className="text-gold" />
-                      <span className="text-sm font-medium">{selectedGuest.name.toLowerCase().replace(" ", ".")}@example.com</span>
+                      <span className="text-sm font-medium">{selectedGuest.email}</span>
                     </div>
                   </div>
                 </section>
@@ -212,9 +212,16 @@ export default function GuestsPage() {
                 <section className="space-y-4">
                   <h4 className="text-xs font-bold text-bark/40 uppercase tracking-widest px-1">Stay Preferences</h4>
                   <div className="flex flex-wrap gap-2">
-                    {["Vegetarian", "Late Checkout", "Extra Pillow", "Mountain View"].map(pref => (
-                      <Badge key={pref} variant="outline" className="bg-white">{pref}</Badge>
+                    {selectedGuest.preferences?.map(pref => (
+                      <Badge key={pref} variant="outline" className="bg-sage/5 text-sage border-sage/10 font-bold">{pref}</Badge>
                     ))}
+                  </div>
+                </section>
+
+                <section className="space-y-4">
+                  <h4 className="text-xs font-bold text-bark/40 uppercase tracking-widest px-1">Internal Notes</h4>
+                  <div className="p-4 bg-amber/5 border border-amber/10 rounded-2xl">
+                    <p className="text-sm text-bark/70 leading-relaxed italic">"{selectedGuest.notes}"</p>
                   </div>
                 </section>
               </div>

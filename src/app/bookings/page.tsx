@@ -21,7 +21,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function BookingsPage() {
-  const { bookings: allBookings, addBooking, updateBooking, deleteBooking, rooms, checkInBooking, checkOutBooking } = useAppStore();
+  const { bookings: allBookings, addBooking, updateBooking, deleteBooking, villa, checkInBooking, checkOutBooking } = useAppStore();
   const { toast } = useToast();
   
   const [selectedBookingId, setSelectedBookingId] = useState<string | null>(null);
@@ -332,29 +332,25 @@ export default function BookingsPage() {
                   <div className="grid grid-cols-1 gap-3">
                     {selectedBooking.status !== "Arrived" ? (
                       <div className="space-y-3">
-                        <label className="text-[10px] font-bold text-bark/40 uppercase tracking-widest px-1">Assign Room for Check-in</label>
-                        <div className="flex gap-2">
-                          <select 
-                            id="roomSelect"
-                            className="flex-1 px-4 py-2 bg-white border border-bark/10 rounded-xl text-sm focus:ring-1 focus:ring-gold/20 outline-none"
-                          >
-                            <option value="">Select available unit...</option>
-                            {rooms.filter(r => r.status === "Available" && r.type === selectedBooking.type).map(r => (
-                              <option key={r.id} value={r.id}>{r.name}</option>
-                            ))}
-                          </select>
-                          <Button 
-                            onClick={() => {
-                              const roomId = (document.getElementById("roomSelect") as HTMLSelectElement).value;
-                              if (!roomId) return toast("Please select a room", "error");
-                              checkInBooking(selectedBooking.id, roomId);
-                              toast("Guest checked in successfully!", "success");
-                            }}
-                            className="bg-sage text-white px-6"
-                          >
-                            Check-in
-                          </Button>
-                        </div>
+                        {villa.status === "Available" ? (
+                          <div className="p-4 bg-sage/5 border border-sage/10 rounded-2xl space-y-3">
+                            <p className="text-xs text-sage font-medium">Villa is ready for check-in.</p>
+                            <Button 
+                              onClick={() => {
+                                checkInBooking(selectedBooking.id);
+                                toast("Guest checked in successfully!", "success");
+                              }}
+                              className="w-full bg-sage text-white"
+                            >
+                              Check-in to Sunrise Villa
+                            </Button>
+                          </div>
+                        ) : (
+                          <div className="p-4 bg-rose/5 border border-rose/10 rounded-2xl space-y-1">
+                            <p className="text-xs text-rose font-bold">Villa Unavailable</p>
+                            <p className="text-[10px] text-rose/60">The villa is currently {villa.status}. It must be 'Available' before check-in.</p>
+                          </div>
+                        )}
                       </div>
                     ) : (
                       <Button 

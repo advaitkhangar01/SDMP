@@ -61,9 +61,45 @@ export const payments = [
   { id: "TXN-5523", guest: "Vikram Singh", amount: "₹45,000", date: "2024-05-03", status: "Completed", method: "UPI" },
 ];
 export const guests = [
-  { name: "Virat Kohli", city: "Delhi", spend: "₹15,40,000", bookings: 4, lastStay: "Apr 2024", type: "VIP", status: "Active" },
-  { name: "Pooja Hegde", city: "Mumbai", spend: "₹8,20,000", bookings: 2, lastStay: "Mar 2024", type: "VIP", status: "Active" },
-  { name: "Sameer Varma", city: "Bangalore", spend: "₹3,45,000", bookings: 1, lastStay: "Feb 2024", type: "Regular", status: "Active" },
+  { 
+    name: "Virat Kohli", 
+    city: "Delhi", 
+    spend: "₹15,40,000", 
+    bookings: 4, 
+    lastStay: "Apr 2024", 
+    type: "VIP", 
+    status: "Active",
+    email: "virat@example.com",
+    phone: "+91 98765 43210",
+    preferences: ["Vegetarian", "High Floor", "Extra Towels"],
+    notes: "Prefers early morning tea. Very punctual."
+  },
+  { 
+    name: "Pooja Hegde", 
+    city: "Mumbai", 
+    spend: "₹8,20,000", 
+    bookings: 2, 
+    lastStay: "Mar 2024", 
+    type: "VIP", 
+    status: "Active",
+    email: "pooja@example.com",
+    phone: "+91 99887 76655",
+    preferences: ["Yoga Mat in Room", "Organic Food"],
+    notes: "Visits for wellness retreats."
+  },
+  { 
+    name: "Sameer Varma", 
+    city: "Bangalore", 
+    spend: "₹3,45,000", 
+    bookings: 1, 
+    lastStay: "Feb 2024", 
+    type: "Regular", 
+    status: "Active",
+    email: "sameer@example.com",
+    phone: "+91 91234 56789",
+    preferences: ["Late Check-out"],
+    notes: "Business traveler."
+  },
 ];
 
 export const offers = [
@@ -77,17 +113,13 @@ export const events = [
   { id: 3, title: "Yoga & Wellness Retreat", date: "June 05, 2024", guests: 20, revenue: "₹1,80,000", status: "Open", type: "Wellness" },
 ];
 
-export const rooms = [
-  { id: "V1", name: "Villa 1", type: "Villa", status: "Occupied", currentBookingId: "BK-8802" },
-  { id: "V2", name: "Villa 2", type: "Villa", status: "Available" },
-  { id: "V3", name: "Villa 3", type: "Villa", status: "Maintenance" },
-  { id: "V4", name: "Villa 4", type: "Villa", status: "Dirty" },
-  { id: "S1", name: "Luxury Suite A", type: "Luxury Suite", status: "Occupied", currentBookingId: "BK-8801" },
-  { id: "S2", name: "Luxury Suite B", type: "Luxury Suite", status: "Available" },
-  { id: "G1", name: "Garden Room 101", type: "Garden Room", status: "Available" },
-  { id: "G2", name: "Garden Room 102", type: "Garden Room", status: "Available" },
-  { id: "G3", name: "Garden Room 103", type: "Garden Room", status: "Occupied", currentBookingId: "BK-8803" },
-];
+export const villaStatus = {
+  name: "Sunrise Villa",
+  status: "Occupied" as const,
+  currentBookingId: "BK-8802",
+  lastCleaned: "2024-05-06",
+  nextMaintenance: "2024-06-01"
+};
 
 export const staff = [
   { id: "S1", name: "Suresh Kumar", role: "Housekeeping", status: "On Duty" },

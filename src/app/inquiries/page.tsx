@@ -153,14 +153,19 @@ export default function InquiriesPage() {
 
                       <div className="flex flex-col md:items-end gap-3">
                         <div className="flex items-center gap-4 text-xs text-bark/40 font-medium">
+                          <div className="flex items-center gap-4 mr-4">
+                            <button className="p-2 hover:bg-gold/10 text-gold rounded-full transition-all hover:scale-110"><Phone size={16} /></button>
+                            <button className="p-2 hover:bg-sage/10 text-sage rounded-full transition-all hover:scale-110"><MessageSquare size={16} /></button>
+                            <button className="p-2 hover:bg-sky/10 text-sky rounded-full transition-all hover:scale-110"><Mail size={16} /></button>
+                          </div>
                           <div className="flex items-center gap-1.5"><Clock size={14} /> Received {inq.responseTime} ago</div>
-                          <button onClick={() => handleDelete(inq.id)} className="text-rose hover:text-rose/80"><Trash2 size={14} /></button>
+                          <button onClick={() => handleDelete(inq.id)} className="text-rose hover:text-rose/80 ml-2"><Trash2 size={14} /></button>
                         </div>
                         <div className="flex items-center gap-2">
-                          <Button variant="outline">View Thread</Button>
+                          <Button variant="outline" className="text-xs">Quick Reply</Button>
                           <Button 
                             onClick={() => handleConvert(inq.id, inq.name)}
-                            className="flex items-center gap-2 group"
+                            className="flex items-center gap-2 group text-xs py-1"
                           >
                             Convert to Booking <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                           </Button>

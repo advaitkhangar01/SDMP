@@ -11,7 +11,7 @@ import {
   offers as initialOffers,
   payments as initialPayments,
   events as initialEvents,
-  rooms as initialRooms,
+  villaStatus as initialVilla,
   staff as initialStaff
 } from "./mockData";
 
@@ -34,17 +34,14 @@ interface AppState {
   offers: typeof initialOffers;
   payments: typeof initialPayments;
   events: typeof initialEvents;
-  rooms: typeof initialRooms;
+  villa: typeof initialVilla;
   staff: typeof initialStaff;
-  payments: typeof initialPayments;
-  events: typeof initialEvents;
-  rooms: typeof initialRooms;
 
   // Bookings Actions
   addBooking: (booking: any) => void;
   updateBooking: (id: string, updates: any) => void;
   deleteBooking: (id: string) => void;
-  checkInBooking: (bookingId: string, roomId: string) => void;
+  checkInBooking: (bookingId: string) => void;
   checkOutBooking: (bookingId: string) => void;
 
   // Inquiries Actions
@@ -75,8 +72,8 @@ interface AppState {
   // Events Actions
   deleteEvent: (id: number) => void;
 
-  // Rooms Actions
-  updateRoomStatus: (id: string, status: string, bookingId?: string) => void;
+  // Villa Actions
+  updateVillaStatus: (status: "Available" | "Occupied" | "Dirty" | "Maintenance", bookingId?: string) => void;
 }
 
 export const useAppStore = create<AppState>()(
@@ -92,7 +89,7 @@ export const useAppStore = create<AppState>()(
       offers: initialOffers,
       payments: initialPayments,
       events: initialEvents,
-      rooms: initialRooms,
+      villa: initialVilla,
       staff: initialStaff,
 
       addBooking: (booking) => set((state) => ({ 
@@ -107,32 +104,29 @@ export const useAppStore = create<AppState>()(
         bookings: state.bookings.filter(b => b.id !== id)
       })),
 
-      checkInBooking: (bookingId, roomId) => set((state) => ({
+      checkInBooking: (bookingId) => set((state) => ({
         bookings: state.bookings.map(b => b.id === bookingId ? { ...b, status: "Arrived" as const } : b),
-        rooms: state.rooms.map(r => r.id === roomId ? { ...r, status: "Occupied", currentBookingId: bookingId } : r)
+        villa: { ...state.villa, status: "Occupied", currentBookingId: bookingId }
       })),
 
       checkOutBooking: (bookingId) => set((state) => {
         const booking = state.bookings.find(b => b.id === bookingId);
-        const room = state.rooms.find(r => r.currentBookingId === bookingId);
         
         const newState = {
-          bookings: state.bookings.map(b => b.id === bookingId ? { ...b, status: "Confirmed" as const } : b), // Should be "Checked-out" but mock status set is limited
-          rooms: state.rooms.map(r => r.currentBookingId === bookingId ? { ...r, status: "Dirty", currentBookingId: undefined } : r),
+          bookings: state.bookings.map(b => b.id === bookingId ? { ...b, status: "Confirmed" as const } : b),
+          villa: { ...state.villa, status: "Dirty", currentBookingId: undefined },
         };
 
-        if (room) {
-          const cleaningTask = {
-            id: state.tasks.length + 1,
-            title: `Deep Clean ${room.name} (Post-Checkout: ${booking?.guest})`,
-            priority: "High" as const,
-            assignee: "Housekeeping Team",
-            status: "Todo" as const,
-            due: "Today"
-          };
-          // @ts-ignore
-          newState.tasks = [...state.tasks, cleaningTask];
-        }
+        const cleaningTask = {
+          id: state.tasks.length + 1,
+          title: `Deep Clean Sunrise Villa (Post-Checkout: ${booking?.guest})`,
+          priority: "High" as const,
+          assignee: "Housekeeping Team",
+          status: "Todo" as const,
+          due: "Today"
+        };
+        // @ts-ignore
+        newState.tasks = [...state.tasks, cleaningTask];
 
         return newState;
       }),
@@ -216,8 +210,8 @@ export const useAppStore = create<AppState>()(
         events: state.events.filter(e => e.id !== id)
       })),
 
-      updateRoomStatus: (id, status, bookingId) => set((state) => ({
-        rooms: state.rooms.map(r => r.id === id ? { ...r, status, currentBookingId: bookingId } : r)
+      updateVillaStatus: (status, bookingId) => set((state) => ({
+        villa: { ...state.villa, status, currentBookingId: bookingId }
       })),
     }),
     {
