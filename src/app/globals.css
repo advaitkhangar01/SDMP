@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #F7F4EF;
+  --color-bark: #2C1F0E;
+  --color-gold: #C9973A;
+  --color-sage: #5A7A5C;
+  --color-rose: #A0504A;
+  --color-sky: #3D6A8A;
+  --color-amber: #C47A1A;
+  
+  --color-sidebar: #2C1F0E;
+  --color-sidebar-foreground: #F7F4EF;
+  --color-sidebar-accent: #C9973A;
+  
+  --font-serif: "Outfit", serif;
+  --font-sans: "Inter", sans-serif;
+  
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  
+  --shadow-premium: 0 10px 30px -10px rgba(44, 31, 14, 0.1);
+  --shadow-gold: 0 4px 20px -2px rgba(201, 151, 58, 0.2);
+}
+
+:root {
+  --background: #F7F4EF;
+  --foreground: #2C1F0E;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.luxury-card {
+  background: white;
+  border-radius: 1rem;
+  border: 1px solid rgba(44, 31, 14, 0.05);
+  box-shadow: 0 4px 20px -2px rgba(44, 31, 14, 0.03);
+  transition: all 0.3s ease;
+}
+
+.luxury-card:hover {
+  box-shadow: 0 10px 30px -10px rgba(44, 31, 14, 0.08);
+  transform: translateY(-2px);
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s ease;
+  color: rgba(247, 244, 239, 0.7);
+}
+
+.sidebar-item:hover {
+  background: rgba(247, 244, 239, 0.1);
+  color: #F7F4EF;
+}
+
+.sidebar-item.active {
+  background: #C9973A;
+  color: #F7F4EF;
+  box-shadow: 0 4px 15px -3px rgba(201, 151, 58, 0.4);
+}
